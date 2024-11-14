@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PokeDex</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="abilities">Abilities</string>
+    <string name="stats">Stats</string>
+    <string name="evolution">Evolution</string>
+    <string name="pokedexeentry">Pokedex Entry</string>
 </resources>
