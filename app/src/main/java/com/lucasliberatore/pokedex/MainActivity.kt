@@ -5,8 +5,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.lucasliberatore.pokedex.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
+    //lateinit var binding: ActivityMainBinding
+    lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -16,5 +20,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // set up the viewModel
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 }
