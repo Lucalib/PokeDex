@@ -6,4 +6,30 @@
     <string name="stats">Stats</string>
     <string name="evolution">Evolution</string>
     <string name="pokedexeentry">Pokedex Entry</string>
+
+
+    <string name="logo">Logo</string>
+    <string name="menu">Menu</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="mypokemon">My Pokémon</string>
+    <string name="no_account">Do not have an account, Register </string>
+    <string name="here">Here</string>
+
+
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="welcome_user">Welcome new user</string>
+    <string name="problem">Problem creating account</string>
+    <string name="logout">Logout</string>
+    <string name="logged_out">You are now logged out</string>
+    <string name="add">Add to Cloud</string>
+    <string name="read">Read from Cloud</string>
 </resources>

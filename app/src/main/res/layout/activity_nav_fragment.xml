@@ -1,0 +1,58 @@
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@android:color/white"
+    tools:context=".NavFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:padding="15dp">
+
+
+        <!-- Logo Image -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Burger Menu ImageButton -->
+        <ImageButton
+            android:id="@+id/burgerMenu"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/burger"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- TextView displaying activity name -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Home"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/burgerMenu"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

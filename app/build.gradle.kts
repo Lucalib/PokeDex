@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -35,16 +36,21 @@ android {
     }
     buildFeatures{
         dataBinding = true
+        viewBinding = true
     }
 }
 
 dependencies {
     implementation ("com.google.code.gson:gson:2.11.0")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

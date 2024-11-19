@@ -2,7 +2,7 @@ package com.lucasliberatore.pokedex.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.lucasliberatore.pokedex.PokemonAPIFormat
+import com.lucasliberatore.pokedex.model.PokemonAPIFormat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -15,7 +15,7 @@ class MainViewModel: ViewModel() {
     suspend fun getPokemon():PokemonAPIFormat? {
         val defer = CoroutineScope(Dispatchers.IO).async {
             val url =
-                URL("https://pokeapi.co/api/v2/pokemon/1")
+                URL("https://pokeapi.co/api/v2/pokemon-species/1")
             val connection = url.openConnection() as HttpsURLConnection
             if (connection.responseCode == 200) {
                 val inputSystem = connection.inputStream
