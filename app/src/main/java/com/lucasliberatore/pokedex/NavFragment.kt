@@ -1,5 +1,6 @@
 package com.lucasliberatore.pokedex
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -84,7 +85,6 @@ class NavFragment : Fragment(R.layout.activity_nav_fragment) {
             menu.add("Logout").setOnMenuItemClickListener {
                 auth.signOut()
                 startActivity(Intent(requireContext(), MainActivity::class.java))
-//                requireActivity().finish()
                 true
             }
         }

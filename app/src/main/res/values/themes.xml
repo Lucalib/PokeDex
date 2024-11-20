@@ -5,6 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:navigationBarColor">@color/black</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/slide_transition</item>
+        <item name="android:windowExitTransition">@transition/slide_transition</item>
     </style>
     <style name="Theme.PokeDex" parent="Base.Theme.PokeDex" />
 </resources>

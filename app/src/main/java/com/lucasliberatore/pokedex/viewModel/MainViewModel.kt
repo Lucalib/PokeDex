@@ -12,10 +12,10 @@ import javax.net.ssl.HttpsURLConnection
 
 class MainViewModel: ViewModel() {
 
-    suspend fun getPokemon():PokemonAPIFormat? {
+    suspend fun getPokemon(int: Int):PokemonAPIFormat? {
         val defer = CoroutineScope(Dispatchers.IO).async {
             val url =
-                URL("https://pokeapi.co/api/v2/pokemon-species/1")
+                URL("https://pokeapi.co/api/v2/pokemon/$int")
             val connection = url.openConnection() as HttpsURLConnection
             if (connection.responseCode == 200) {
                 val inputSystem = connection.inputStream

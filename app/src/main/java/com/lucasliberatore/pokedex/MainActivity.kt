@@ -1,27 +1,120 @@
 package com.lucasliberatore.pokedex
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.lucasliberatore.pokedex.databinding.ActivityMainBinding
+import com.lucasliberatore.pokedex.model.Pokemon
+import com.lucasliberatore.pokedex.model.PokemonAPIFormat
+import com.lucasliberatore.pokedex.viewModel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.InputStreamReader
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var binding: ActivityMainBinding
+    lateinit var viewModel: MainViewModel
+    lateinit var pokemons: MutableList<Pokemon>
+    lateinit var sharedPreferences: SharedPreferences
+    private val sharedPrefFile = "pokemon_cache"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Set up the layout binding (optional but recommended)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        sharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+
+        val gridLayoutManager = GridLayoutManager(applicationContext, 2)  // 2 items per row
+        binding.recyclerView.layoutManager = gridLayoutManager
+        binding.recyclerView.setHasFixedSize(true)
+
+        // initialize the list of books
+        pokemons = mutableListOf<Pokemon>()
+
+        // launch URL call on thread
+        loadPokemonData()
+    }
+
+    private fun loadPokemonData() {
+        val cachedData = sharedPreferences.getString("pokemons", null)
+
+        if (cachedData != null) {
+            // If cached data exists, load it into the list
+            val gson = Gson()
+            val pokemonArray = gson.fromJson(cachedData, Array<Pokemon>::class.java)
+            pokemons.addAll(pokemonArray)
+            binding.recyclerView.adapter = RecyclerAdapter(pokemons)
+        } else {
+            showLoadingSpinner()
+            runCoroutineFromViewModel()
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    private fun showLoadingSpinner() {
+        // Make the Pokeball ImageView visible
+        binding.imageViewPokeball.visibility = ImageView.VISIBLE
+        val animation: Animation = AnimationUtils.loadAnimation(this, R.animator.spin)
+        binding.imageViewPokeball.startAnimation(animation)
+    }
+
+    private fun runCoroutineFromViewModel() {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            for (i in 0 until 151) {
+                val request = viewModel.getPokemon(i + 1)
+                if (request != null) {
+                    val pokemon = Pokemon(
+                        id = i + 1,
+                        name = request.name,
+                        types = request.types,
+                        sprites = request.sprites.front_default
+                    )
+                    pokemons.add(pokemon)
+                }
+            }
+
+            // Cache the fetched data in SharedPreferences
+            cachePokemonData()
+
+            // Update the UI on the main thread
+            binding.imageViewPokeball.clearAnimation()  // Stop the animation
+            binding.imageViewPokeball.visibility = ImageView.INVISIBLE  // Hide the spinner
+            binding.recyclerView.adapter = RecyclerAdapter(pokemons)
+        }
+    }
+
+    private fun cachePokemonData() {
+        val gson = Gson()
+        val json = gson.toJson(pokemons) // Convert the Pokémon list to a JSON string
+
+        // Save the JSON string in SharedPreferences
+        val editor = sharedPreferences.edit()
+        editor.putString("pokemons", json)
+        editor.apply() // Commit changes asynchronously
     }
 }
-
-
-
-
-
-
 
 
 //package com.lucasliberatore.pokedex
@@ -126,13 +219,4 @@ class MainActivity : AppCompatActivity() {
 ////            finish()
 ////        }
 //    }
-//
-////    private fun runCoroutineFromViewModel() {
-////        CoroutineScope(Dispatchers.Main).launch {
-////            val request = viewModel.getPokemon()
-////            if (request != null) {
-////                Log.i("TAG", request.toString())
-////            }
-////        }
-////    }
 //}
