@@ -13,8 +13,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.setPadding
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
@@ -209,7 +211,14 @@ class PokemonDetailActivity : AppCompatActivity() {
             minLevelTextView.text = "${evo.min_level ?: "?"}"
             minLevelTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             minLevelTextView.setTextColor(Color.BLACK)
+            minLevelTextView.background = ContextCompat.getDrawable(this, R.drawable.curve)
             minLevelTextView.gravity = Gravity.CENTER
+            ViewCompat.setBackgroundTintList(
+                minLevelTextView,
+                ColorStateList.valueOf(Color.parseColor("#E2E2E7"))
+            )
+            minLevelTextView.setPadding(42, 15, 42, 15)
+
 
             // Add the sprite and min level to the LinearLayout
             binding.evolutionsContainer.addView(minLevelTextView)
