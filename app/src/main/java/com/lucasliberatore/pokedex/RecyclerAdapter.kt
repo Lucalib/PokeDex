@@ -79,8 +79,8 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
         var pokemonID = pokemon.id
         var pokemonName = pokemon.name.replaceFirstChar { it.uppercaseChar() }
         var pokemonTypes = pokemon.types
-        var pokemonWeight = (pokemon.weight.toFloat() / 10).toString() + "m"
-        var pokemonHeight = (pokemon.height.toFloat() / 10).toString() + "kg"
+        var pokemonWeight = (pokemon.weight.toFloat() / 10).toString() + "kg"
+        var pokemonHeight = (pokemon.height.toFloat() / 10).toString() + "m"
         var pokemonStats = pokemon.stats
         var pokemonAbilities = pokemon.abilities
 
@@ -117,7 +117,7 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
             intent.putExtra("POKEMON_WEIGHT", pokemonWeight)
             intent.putExtra("POKEMON_HEIGHT", pokemonHeight)
             intent.putExtra("POKEMON_STATS", pokemonStats.map { it.base_stat }.toIntArray())
-            intent.putExtra("POKEMON_ABILITIES", pokemonAbilities.map { it.ability.name }.toTypedArray())
+            intent.putExtra("POKEMON_ABILITIES", pokemonAbilities.map { it.ability.name.replaceFirstChar { it.uppercaseChar() } }.toTypedArray())
             context.startActivity(intent)
         }
     }

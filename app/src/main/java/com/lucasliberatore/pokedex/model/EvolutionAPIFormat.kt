@@ -5,7 +5,8 @@ data class EvolutionAPIFormat(
 )
 
 data class Chain(
-    var evolves_to: List<EvolvesTo>
+    var evolves_to: List<EvolvesTo>,
+    var species: Species
 )
 
 data class EvolvesTo(
@@ -26,4 +27,10 @@ data class Trigger(
 data class Species(
     val name: String,
     val url: String
+)
+
+data class EvoInfo(
+    val sprite: String,
+    val min_level: Int?,
+    val baseSprite: String
 )

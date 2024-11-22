@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun runCoroutineFromViewModel() {
-
         CoroutineScope(Dispatchers.Main).launch {
             for (i in 0 until 493) {
                 val request = viewModel.getPokemon(i + 1)
