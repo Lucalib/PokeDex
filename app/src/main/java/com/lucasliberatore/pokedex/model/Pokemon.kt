@@ -7,9 +7,9 @@ class Pokemon(
     var types: List<Types>,
     var sprites: String,
     var description: String? = null,
-    var height: String? = null,
-    var weight: String? = null,
-    var abilities: List<Abilities>? = null,
-    var stats: List<Stats>? = null,
+    var height: String,
+    var weight: String,
+    var abilities: List<Abilities>,
+    var stats: List<Stats>,
     var evolutions: Chain? = null
 )

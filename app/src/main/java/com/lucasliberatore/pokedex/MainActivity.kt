@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             val gson = Gson()
             val pokemonArray = gson.fromJson(cachedData, Array<Pokemon>::class.java)
             pokemons.addAll(pokemonArray)
-            binding.recyclerView.adapter = RecyclerAdapter(pokemons)
+            binding.recyclerView.adapter = RecyclerAdapter(pokemons, this)
         } else {
             showLoadingSpinner()
             runCoroutineFromViewModel()
@@ -82,14 +82,18 @@ class MainActivity : AppCompatActivity() {
     private fun runCoroutineFromViewModel() {
 
         CoroutineScope(Dispatchers.Main).launch {
-            for (i in 0 until 151) {
+            for (i in 0 until 493) {
                 val request = viewModel.getPokemon(i + 1)
                 if (request != null) {
                     val pokemon = Pokemon(
                         id = i + 1,
                         name = request.name,
                         types = request.types,
-                        sprites = request.sprites.front_default
+                        sprites = request.sprites.front_default,
+                        height = request.height,
+                        weight = request.weight,
+                        stats = request.stats,
+                        abilities = request.abilities
                     )
                     pokemons.add(pokemon)
                 }
@@ -101,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             // Update the UI on the main thread
             binding.imageViewPokeball.clearAnimation()  // Stop the animation
             binding.imageViewPokeball.visibility = ImageView.INVISIBLE  // Hide the spinner
-            binding.recyclerView.adapter = RecyclerAdapter(pokemons)
+            binding.recyclerView.adapter = RecyclerAdapter(pokemons, this@MainActivity)
         }
     }
 

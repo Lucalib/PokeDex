@@ -41,8 +41,9 @@ android {
 }
 
 dependencies {
-    implementation ("com.squareup.picasso:picasso:2.8")
-    implementation ("com.google.code.gson:gson:2.11.0")
+    implementation (libs.picasso)
+    implementation (libs.gson)
+    implementation(libs.glide)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.androidx.core.ktx)
