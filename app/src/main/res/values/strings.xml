@@ -4,31 +4,27 @@
     <string name="weight">Weight</string>
     <string name="abilities">Abilities</string>
     <string name="stats">Stats</string>
-    <string name="evolution">Evolution</string>
+    <string name="evolution">Evolutions</string>
     <string name="pokedexeentry">Pokedex Entry</string>
-
-
-    <string name="logo">Logo</string>
-    <string name="menu">Menu</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="mypokemon">My Pokémon</string>
-    <string name="no_account">Do not have an account, Register </string>
-    <string name="here">Here</string>
-
-
+    <string name="hint">Search Pokémon</string>
+    <string name="hp">HP</string>
+    <string name="atk">ATK</string>
+    <string name="def">DEF</string>
+    <string name="spa">SpA</string>
+    <string name="spd">SpD</string>
+    <string name="spdd">SPD</string>
+    <string name="tot">TOT</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="welcome_user">Welcome new user</string>
-    <string name="problem">Problem creating account</string>
-    <string name="logout">Logout</string>
-    <string name="logged_out">You are now logged out</string>
-    <string name="add">Add to Cloud</string>
-    <string name="read">Read from Cloud</string>
+    <string name="home">Home</string>
+    <string name="appdetail">Our App - PokeDex</string>
+    <string name="des1">Our App provides a list of Pokémon data which includes information about the first 5 generations of Pokémon." </string>
+    <string name="des2">The Home Page features a list of Pokémon, each of which users can select to view detailed information, including the Pokémons ID, Name, Types, Description, Height, Weight, Abilities, Stats, and Evolutions.</string>
+    <string name="des3">Users can register an account and log in to the app, enabling them to access their saved Pokémon and preferences across devices.</string>
+    <string name="des4">Our app allows users to search for a specific Pokémon and save their favorites to Firestore, so they can view them on their My Pokémon page.</string>
+    <string name="groupmember">Group Members</string>
+    <string name="luke">Lucas Liberatore - 1076294 - Section 1 </string>
+    <string name="daivd">David Lamonaca - 1090133 - Section 1 </string>
 </resources>

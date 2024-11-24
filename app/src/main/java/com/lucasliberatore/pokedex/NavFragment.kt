@@ -18,28 +18,21 @@ class NavFragment : Fragment(R.layout.activity_nav_fragment) {
     private lateinit var burgerMenuButton: ImageButton
     lateinit var binding: ActivityNavFragmentBinding
 
-    // Map to translate activity class name to a custom title
     private val activityTitleMap = mapOf(
         "MainActivity" to "Home",
         "LoginActivity" to "Login",
         "RegisterActivity" to "Register",
-        "MyPokemonActivity" to "My Pokémon"
+        "MyPokemon" to "My Pokémon",
+        "AboutActivity" to "About"
     )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-
-        // Inflate the layout for this fragment
         binding = ActivityNavFragmentBinding.inflate(inflater, container, false)
-
-        // Reference the burger menu button
         burgerMenuButton = binding.burgerMenu
-
-        // Set the burger menu button click listener
         burgerMenuButton.setOnClickListener {
             showMenu()
         }
@@ -50,46 +43,51 @@ class NavFragment : Fragment(R.layout.activity_nav_fragment) {
     override fun onResume() {
         super.onResume()
 
-        // Get the current activity name and use the map to set the appropriate title
         val currentActivityName = requireActivity()::class.java.simpleName
-        val title = activityTitleMap[currentActivityName] ?: currentActivityName // Default to class name if not found
+        val title = activityTitleMap[currentActivityName] ?: currentActivityName
         binding.titleText.text = title
     }
 
     private fun showMenu() {
-        // Create a PopupMenu
         val popupMenu = PopupMenu(requireContext(), burgerMenuButton)
         val menu = popupMenu.menu
 
-        // Add different menu options based on user login status
         menu.add("Home").setOnMenuItemClickListener {
-            startActivity(Intent(requireContext(), MainActivity::class.java))
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
             true
         }
+
+        menu.add("About").setOnMenuItemClickListener {
+            val intent = Intent(requireContext(), AboutActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+            true
+        }
+
         if (auth.currentUser == null) {
-            // If user is not logged in, show "Login" and "Register" options
             menu.add("Login").setOnMenuItemClickListener {
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 true
             }
             menu.add("Register").setOnMenuItemClickListener {
-                startActivity(Intent(requireContext(), RegisterActivity::class.java))
+                val intent = Intent(requireContext(), RegisterActivity::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 true
             }
         } else {
-            // If user is logged in, show "My Pokémon" and "Logout" options
             menu.add("My Pokémon").setOnMenuItemClickListener {
-                startActivity(Intent(requireContext(), MainActivity::class.java))
+                val intent = Intent(requireContext(), MyPokemon::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 true
             }
             menu.add("Logout").setOnMenuItemClickListener {
                 auth.signOut()
-                startActivity(Intent(requireContext(), MainActivity::class.java))
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 true
             }
         }
-        // Show the menu
         popupMenu.show()
     }
 }
-

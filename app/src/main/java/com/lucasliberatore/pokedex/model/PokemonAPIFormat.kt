@@ -12,7 +12,7 @@ data class PokemonAPIFormat(
 )
 
 data class Types(
-    var slot: Int,
+    var slot: Int?,
     var type: Type
 )
 
@@ -22,7 +22,7 @@ data class Type(
 
 data class Stats(
     var base_stat:Int,
-    var stat: Stat
+    var stat: Stat?
 )
 
 data class Stat(

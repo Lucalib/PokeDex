@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#AD3434"
-    tools:context=".PokemonDetailActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pokemon"
+            type="com.lucasliberatore.pokedex.model.Pokemon" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AD3434"
+        tools:context=".PokemonDetailActivity">
 
     <LinearLayout
         android:id="@+id/topBackground"
@@ -26,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Image Button (Top-Left Corner) -->
             <ImageButton
                 android:id="@+id/topLeftImageButtonOff"
                 android:layout_width="wrap_content"
@@ -35,6 +42,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
+                android:onClick="catchPokemon"
                 android:src="@android:drawable/btn_star_big_off"
                 android:visibility="visible" />
 
@@ -49,7 +57,6 @@
                 android:src="@android:drawable/btn_star_big_on"
                 android:visibility="gone" />
 
-            <!-- Close Button (Top-Right Corner) -->
             <ImageButton
                 android:id="@+id/closeButton"
                 android:layout_width="wrap_content"
@@ -70,243 +77,162 @@
             android:id="@+id/pokemonSprite"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/detailsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/rounded_top_white_background"
-        android:clipToPadding="false"
-        android:gravity="center|top"
-        android:orientation="vertical"
-        android:paddingTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBackground">
-
-        <!-- Pokémon ID -->
-        <TextView
-            android:id="@+id/pokemonID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textColor="@color/grey"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Pokémon Name -->
-        <TextView
-            android:id="@+id/pokemonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="#000000"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <!-- Pokémon Types -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingHorizontal="5dp">
+            android:id="@+id/detailsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_top_white_background"
+            android:clipToPadding="false"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            android:paddingTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topBackground">
 
             <TextView
-                android:id="@+id/pokemonType1"
+                android:id="@+id/pokemonID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_edittext"
-                android:padding="4dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Type"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text='@{"N° " + String.valueOf(pokemon.id)}'
+                android:textColor="@color/grey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/pokemonType2"
+                android:id="@+id/pokemonName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edittext"
-                android:padding="4dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Secondary Type"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@{pokemon.name}"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
-        <!-- Pokedex Entry -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center">
-
-            <!-- Pokedex Entry Label -->
-            <TextView
-                android:id="@+id/pokedexEntryLabel"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Pokedex Entry"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
 
-            <!-- Pokedex Entry -->
-            <TextView
-                android:id="@+id/pokedexEntry"
+                <TextView
+                    android:id="@+id/pokemonType1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pokemonType2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="des"
-                android:textColor="@color/grey"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-
-        <!-- Height and Weight -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <!-- Left Side: Height -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Height"
+                    android:id="@+id/pokedexEntryLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Height"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/pokedexeentry"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Right Side: Weight -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Weight"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/pokedexEntry"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Weight"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <!-- Left Side: pokemonHeight -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/pokemonHeight"
-                    android:layout_width="160dp"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#E2E2E7"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:text="0.7kg"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/Height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/height"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/Weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weight"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- Right Side: pokemonWeight -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pokemonWeight"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="@drawable/curve"
-                    android:text="6.9m"
-                    android:backgroundTint="#E2E2E7"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <!-- Abilities -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <!-- Centered Title -->
-            <TextView
-                android:id="@+id/pokemonAbilitiesLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Abilities"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <!-- Abilities Layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Left Side: Ability 1 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -315,7 +241,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/ability1"
+                        android:id="@+id/pokemonHeight"
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/curve"
@@ -323,14 +249,12 @@
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:text="Ability 1"
+                        android:text="@{pokemon.height}"
                         android:textColor="#000000"
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <!-- Right Side: Ability 2 -->
                 <LinearLayout
-                    android:id="@+id/abilitylayout2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -338,7 +262,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/ability2"
+                        android:id="@+id/pokemonWeight"
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/curve"
@@ -346,313 +270,382 @@
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:text="Ability 2"
+                        android:text="@{pokemon.weight}"
                         android:textColor="#000000"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/pokemonAbilitiesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/abilities"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ability1"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/curve"
+                            android:backgroundTint="#E2E2E7"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/abilitylayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ability2"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/curve"
+                            android:backgroundTint="#E2E2E7"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/pokemonStatsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/stats"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/HP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#DF2140"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/hp"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/HPValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[0].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/ATK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#FF994D"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/atk"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ATKValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[1].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/DEF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#EECD3D"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/def"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/DEFValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[2].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/SpA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#85DDFF"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/spa"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/SpAValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[3].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/SpD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#96DA83"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/spd"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/SpDValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[4].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#E2E2E7"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/SPD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#FB94A8"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/spdd"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/SPDValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(pokemon.stats[5].base_stat)}"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/curve"
+                    android:backgroundTint="#88AAEA"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/TOT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/curve"
+                        android:backgroundTint="#7195DC"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/tot"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TOTValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/evolutionsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="@string/evolution"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <HorizontalScrollView
+                android:id="@+id/evoView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/evolutionsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <!-- HP Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/HP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#DF2140"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text=" HP "
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/HPValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- ATK Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/ATK"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#FF994D"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="ATK"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/ATKValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- DEF Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/DEF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#EECD3D"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="DEF"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/DEFValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- SpA Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/SpA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#85DDFF"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="SpA"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/SpAValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- SpD Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/SpD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#96DA83"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="SpD"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/SpDValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- SPD Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#E2E2E7"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/SPD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#FB94A8"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="SPD"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/SPDValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- TOT Layout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:background="@drawable/curve"
-                android:backgroundTint="#88AAEA"
-                android:paddingLeft="3dp"
-                android:paddingTop="5dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="5dp">
-
-                <TextView
-                    android:id="@+id/TOT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/curve"
-                    android:backgroundTint="#7195DC"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="TOT"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/TOTValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-        <!-- Evolutions -->
-        <TextView
-            android:id="@+id/evolutionsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="Evolution"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <HorizontalScrollView
-            android:id="@+id/evoView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <LinearLayout
-                android:id="@+id/evolutionsContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

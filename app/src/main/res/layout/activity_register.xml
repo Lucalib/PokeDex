@@ -26,7 +26,6 @@
             android:background="@android:color/transparent" />
     </androidx.cardview.widget.CardView>
 
-    <!-- Username Input -->
     <EditText
         android:id="@+id/username"
         android:layout_width="0dp"
@@ -46,7 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardView" />
 
-    <!-- Password Input -->
     <EditText
         android:id="@+id/password"
         android:layout_width="0dp"
@@ -66,7 +64,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/username" />
 
-    <!-- Register Button -->
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="0dp"

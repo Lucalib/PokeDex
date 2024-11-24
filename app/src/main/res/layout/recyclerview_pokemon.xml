@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- CardView for individual Pokemon -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="0dp"
@@ -28,14 +27,12 @@
                 android:id="@+id/imageViewPokemon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/textViewID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID"
                 android:textAlignment="center"
                 android:textColor="@color/grey"
                 android:textSize="18sp"
@@ -46,13 +43,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Name"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- Container for types -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,10 +59,9 @@
                     android:id="@+id/textViewType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/rounded_edittext"
                     android:padding="4dp"
-                    android:text="Type"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
@@ -79,7 +73,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edittext"
                     android:padding="4dp"
-                    android:text="Secondary Type"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"

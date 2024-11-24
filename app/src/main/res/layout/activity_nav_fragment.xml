@@ -15,18 +15,14 @@
         android:elevation="4dp"
         android:padding="15dp">
 
-
-        <!-- Logo Image -->
         <ImageView
             android:id="@+id/logo"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:contentDescription="@string/logo"
             android:src="@drawable/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Burger Menu ImageButton -->
         <ImageButton
             android:id="@+id/burgerMenu"
             android:layout_width="45dp"
@@ -38,14 +34,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- TextView displaying activity name -->
         <TextView
             android:id="@+id/titleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="9dp"
-            android:text="Home"
+            android:text="@string/home"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -53,7 +48,5 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/logo"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.appcompat.widget.LinearLayoutCompat>

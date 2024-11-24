@@ -20,7 +20,6 @@ class SpeciesViewModel: ViewModel() {
             if (connection.responseCode == 200) {
                 val inputSystem = connection.inputStream
                 val inputStreamReader = InputStreamReader(inputSystem, "UTF-8")
-                // if crashes on line below your classes are not correct
                 val request = Gson().fromJson(inputStreamReader, SpeciesAPIFormat::class.java)
                 inputStreamReader.close()
                 inputSystem.close()

@@ -1,5 +1,7 @@
 package com.lucasliberatore.pokedex
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -14,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lucasliberatore.pokedex.model.Pokemon
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: Context) :
+class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: Context, private val activity: Activity) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     val colorMap = mapOf(
         "Grass" to "#93D776",
@@ -37,10 +39,6 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
         "Dark" to "#624D4E"
     )
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imageView: ImageView
         var textViewID: TextView
@@ -50,7 +48,6 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
         var card_view: CardView
 
         init {
-            // Define click listener for the ViewHolder's View.
             imageView = view.findViewById(R.id.imageViewPokemon)
             textViewID = view.findViewById<TextView>(R.id.textViewID)
             textViewName = view.findViewById<TextView>(R.id.textViewName)
@@ -60,45 +57,48 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.recyclerview_pokemon, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         val pokemon = dataSet[position]
         Picasso.get().load(pokemon.sprites).into(viewHolder.imageView)
 
         var pokemonID = pokemon.id
         var pokemonName = pokemon.name.replaceFirstChar { it.uppercaseChar() }
         var pokemonTypes = pokemon.types
-        var pokemonWeight = (pokemon.weight.toFloat() / 10).toString() + "kg"
-        var pokemonHeight = (pokemon.height.toFloat() / 10).toString() + "m"
+        lateinit var pokemonWeight: Any
+        lateinit var pokemonHeight: Any
+        if(pokemon.weight.endsWith("g")){
+            pokemonWeight = pokemon.weight
+        }
+        else {
+            pokemonWeight = (pokemon.weight.toFloat() / 10).toString() + "kg"
+        }
+        if(pokemon.height.endsWith("m")){
+            pokemonHeight = pokemon.height
+        }
+        else {
+            pokemonHeight = (pokemon.height.toFloat() / 10).toString() + "m"
+        }
         var pokemonStats = pokemon.stats
         var pokemonAbilities = pokemon.abilities
 
-        // Set Pokémon ID and Name
         viewHolder.textViewID.text = "N° $pokemonID"
         viewHolder.textViewName.text = pokemonName
 
-        // Set the primary type
         val typeName = pokemonTypes[0].type.name.replaceFirstChar { it.uppercaseChar() }
         viewHolder.textViewType.text = typeName
         val colorHex = colorMap[typeName]
         viewHolder.textViewType.backgroundTintList = ColorStateList.valueOf(Color.parseColor(colorHex))
 
-        // Reset secondary type visibility and text
         viewHolder.textViewTypeSecondary.visibility = View.GONE
         viewHolder.textViewTypeSecondary.text = ""
 
-        // Set the secondary type if it exists
         if (pokemonTypes.size > 1) {
             val typeSecondaryName = pokemonTypes[1].type.name.replaceFirstChar { it.uppercaseChar() }
             viewHolder.textViewTypeSecondary.text = typeSecondaryName
@@ -118,10 +118,9 @@ class RecyclerAdapter(private val dataSet: List<Pokemon>, private val context: C
             intent.putExtra("POKEMON_HEIGHT", pokemonHeight)
             intent.putExtra("POKEMON_STATS", pokemonStats.map { it.base_stat }.toIntArray())
             intent.putExtra("POKEMON_ABILITIES", pokemonAbilities.map { it.ability.name.replaceFirstChar { it.uppercaseChar() } }.toTypedArray())
-            context.startActivity(intent)
+            context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 }

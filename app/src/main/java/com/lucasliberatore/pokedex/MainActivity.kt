@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
@@ -17,6 +20,7 @@ import com.lucasliberatore.pokedex.viewModel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity()
 {
@@ -32,7 +36,12 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         sharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 
@@ -54,7 +63,7 @@ class MainActivity : AppCompatActivity()
             val pokemonArray = gson.fromJson(cachedData, Array<Pokemon>::class.java)
             pokemons.addAll(pokemonArray)
             filteredPokemons.addAll(pokemons)
-            binding.recyclerView.adapter = RecyclerAdapter(filteredPokemons, this)
+            binding.recyclerView.adapter = RecyclerAdapter(filteredPokemons, this, this)
         }
         else
         {
@@ -96,7 +105,7 @@ class MainActivity : AppCompatActivity()
 
             binding.imageViewPokeball.clearAnimation()
             binding.imageViewPokeball.visibility = ImageView.INVISIBLE
-            binding.recyclerView.adapter = RecyclerAdapter(pokemons, this@MainActivity)
+            binding.recyclerView.adapter = RecyclerAdapter(pokemons, this@MainActivity, this@MainActivity)
         }
     }
 
@@ -129,41 +138,3 @@ class MainActivity : AppCompatActivity()
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
-
-//    val db = Firebase.firestore
-//    val userKey: String = "USER"
-//    val todoKey: String = "TODO"
-//    private lateinit var auth: FirebaseAuth
-//
-//        // Initialize Firebase Auth
-//        auth = FirebaseAuth.getInstance()
-
-////        // Cloud Firestore, add data
-////        binding.buttonAdd.setOnClickListener {
-////            val userToSave: MutableMap<String, String> = mutableMapOf()
-////            userToSave[userKey] = binding.textViewEmail.text.toString()
-////            userToSave[todoKey] = binding.editTextAdd.text.toString()
-////            db.collection(binding.textViewEmail.text.toString()) // Use email as collection
-////                .add(userToSave)
-////                .addOnSuccessListener {
-////                    Log.d("Firebase", "${binding.textViewEmail.text} added successfully")
-////                }
-////                .addOnFailureListener {
-////                    Log.d("Firebase", "${binding.textViewEmail.text} not added")
-////                }
-////        }
-////
-////        // Cloud Firestore, read data
-////        binding.buttonRead.setOnClickListener {
-////            db.collection(binding.textViewEmail.text.toString()) // Use email as collection
-////                .get()
-////                .addOnSuccessListener { result ->
-////                    for (document in result) {
-////                        Log.d("Firestore", "${document.id} => ${document.data}")
-////                        binding.editTextAdd.setText(document.data[todoKey].toString())
-////                    }
-////                }
-////                .addOnFailureListener { exception ->
-////                    Log.w("Firestore", "Error getting documents.", exception)
-////                }
-////        }
