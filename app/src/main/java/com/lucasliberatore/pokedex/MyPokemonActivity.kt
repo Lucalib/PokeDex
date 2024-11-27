@@ -21,7 +21,7 @@ import com.lucasliberatore.pokedex.model.Stats
 import com.lucasliberatore.pokedex.model.Type
 import com.lucasliberatore.pokedex.model.Types
 
-class MyPokemon : AppCompatActivity() {
+class MyPokemonActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var pokemons: MutableList<Pokemon>
     lateinit var filteredPokemons: MutableList<Pokemon>

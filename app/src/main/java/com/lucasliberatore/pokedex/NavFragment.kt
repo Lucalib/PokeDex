@@ -22,7 +22,7 @@ class NavFragment : Fragment(R.layout.activity_nav_fragment) {
         "MainActivity" to "Home",
         "LoginActivity" to "Login",
         "RegisterActivity" to "Register",
-        "MyPokemon" to "My Pokémon",
+        "MyPokemonActivity" to "My Pokémon",
         "AboutActivity" to "About"
     )
 
@@ -77,7 +77,7 @@ class NavFragment : Fragment(R.layout.activity_nav_fragment) {
             }
         } else {
             menu.add("My Pokémon").setOnMenuItemClickListener {
-                val intent = Intent(requireContext(), MyPokemon::class.java)
+                val intent = Intent(requireContext(), MyPokemonActivity::class.java)
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 true
             }

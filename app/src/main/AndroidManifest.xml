@@ -20,7 +20,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".MyPokemon"
+            android:name=".MyPokemonActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
